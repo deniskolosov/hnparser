@@ -130,3 +130,7 @@ CELERY_BROKER_URL = "amqp://localhost:5672"
 CELERY_RESULT_BACKEND = 'django-db'
 
 HN_URL = 'https://news.ycombinator.com/'
+
+REST_FRAMEWORK = {
+    'ORDERING_PARAM': 'order'
+}

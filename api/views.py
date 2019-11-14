@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, filters
 from rest_framework.pagination import LimitOffsetPagination
 
 from api.serializers import PostSerializer
@@ -13,3 +13,4 @@ class PostViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     pagination_class = ModifiedLimitOffsetPagination
+    filter_backends = [filters.OrderingFilter]
