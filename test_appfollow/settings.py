@@ -81,9 +81,13 @@ WSGI_APPLICATION = 'test_appfollow.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("POSTGRES_DB"),
+        "USER": os.environ.get("POSTGRES_USER"),
+        "PASSWORD": os.environ.get("POSTGRES_PASSWORD"),
+        "HOST": os.environ.get("POSTGRES_HOST"),
+        "PORT": os.environ.get("POSTGRES_PORT"),
     }
 }
 
@@ -127,7 +131,7 @@ USE_TZ = True
 STATIC_URL = "/staticfiles/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
-CELERY_BROKER_URL = "amqp://localhost:5672"
+CELERY_BROKER_URL = "amqp://guest@rabbit:5672"
 CELERY_RESULT_BACKEND = 'django-db'
 
 HN_URL = 'https://news.ycombinator.com/'

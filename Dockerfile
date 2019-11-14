@@ -1,5 +1,4 @@
 FROM python:3.6
-
+ADD requirements.txt /code/requirements.txt
 WORKDIR /code
-
-ENTRYPOINT ["/code/docker-entrypoint-django.sh"]
+RUN pip install -r requirements.txt

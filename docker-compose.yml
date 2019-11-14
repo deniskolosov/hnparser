@@ -4,32 +4,70 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    command: >
+      bash -c "
+      python3 manage.py migrate
+      && python3 manage.py collectstatic --no-input --clear
+      && gunicorn test_appfollow.wsgi:application --bind 0.0.0.0:8000"
     restart: always
     volumes:
       - .:/code
     env_file: .env.docker
-    container_name: hn_parser
     expose:
       - 8000
+    hostname: web
     depends_on:
-      - sqlite3
-      - celery
+      - db
       - rabbit
-  sqlite3:
-    image: nouchka/sqlite3:latest
-    stdin_open: true
-    tty: true
-    volumes:
-      - .:/code
-  celery:
-    image: celery:3.1.23
+    networks:
+      - main
   rabbit:
     image: rabbitmq:3.6.9-alpine
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+    networks:
+      - main
+  db:
+    image: postgres:12.0-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file: .env.docker
+    networks:
+      - main
+  celery:
+    build: .
+    command: bash -c "sleep 15 &&celery -A test_appfollow worker -l info"
+    env_file: .env.docker
+    volumes:
+      - .:/code
+    depends_on:
+      - db
+      - rabbit
+    networks:
+      - main
+  celery-beat:
+    build: .
+    env_file: .env.docker
+    command:  bash -c "sleep 15 && celery -A test_appfollow beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler"
+    volumes:
+      - .:/code
+    networks:
+      - main
+    depends_on:
+      - db
+      - rabbit
   nginx:
     build: ./nginx
     volumes:
       - .:/code
     ports:
       - 1337:80
+    networks:
+      - main
     depends_on:
       - web
+networks:
+  main:
+volumes:
+  postgres_data:
