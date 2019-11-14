@@ -1,4 +1,6 @@
 .env
+.env.docker
+staticfiles/
 *.sqlite3
 .idea/
 venv/
