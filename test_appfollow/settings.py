@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'django_celery_beat',
+    'django_celery_results',
     'hackernews_parser.apps.HackernewsParserConfig',
 ]
 
@@ -125,5 +126,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CELERY_BROKER_URL = "amqp://localhost:5672"
+CELERY_RESULT_BACKEND = 'django-db'
 
 HN_URL = 'https://news.ycombinator.com/'
