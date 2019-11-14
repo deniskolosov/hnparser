@@ -125,3 +125,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CELERY_BROKER_URL = "amqp://localhost:5672"
+
+HN_URL = 'https://news.ycombinator.com/'
