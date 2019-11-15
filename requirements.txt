@@ -11,6 +11,7 @@ django-timezone-field==3.1
 djangorestframework==3.10.3
 factory-boy==2.12.0
 Faker==2.0.4
+freezegun==0.3.12
 gunicorn==20.0.0
 idna==2.8
 importlib-metadata==0.23
