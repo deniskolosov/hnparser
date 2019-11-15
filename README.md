@@ -23,6 +23,12 @@ docker-compose exec web python manage.py createsuperuser
 Go to admin `localhost:1337/admin` and create periodic task for fetching news.ycombinator.com
 When task is complete, check API `localhost:1337/posts`
 
+Check working api deployed:
+```
+http://212.71.235.219:1337/posts/
+```
+
+
 Tests:
 ```
 docker-compose exec web python manage.py test
