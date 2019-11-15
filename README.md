@@ -14,10 +14,14 @@ Check running app on localhost:8000
 Run in Docker:
 ```
 mv .env.docker.example .env.docker
-docker-compose up
+docker-compose up -d
 ```
-
-Check running app on localhost:1337
+Create superuser
+```
+docker-compose exec web python manage.py createsuperuser
+```
+Go to admin `localhost:1337/admin` and create periodic task for fetching news.ycombinator.com
+When task is complete, check API `localhost:1337/posts`
 
 Tests:
 ```
