@@ -21,4 +21,4 @@ def process_request():
         text_to_url = [{"title": link.text, "url": link.get("href")} for link in soup.find_all(class_="storylink")]
         Post.objects.bulk_create([Post(title=i["title"], url=i["url"]) for i in text_to_url], ignore_conflicts=True)
     else:
-        logger.warning("Could not fetch the page!")
+        logger.info("Could not fetch the page!")
