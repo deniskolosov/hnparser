@@ -13,6 +13,7 @@ Check running app on localhost:8000
 
 Run in Docker:
 ```
+mv .env.docker.example .env.docker
 docker-compose up
 ```
 
